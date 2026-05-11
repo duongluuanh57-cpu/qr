@@ -5,8 +5,8 @@ import { ExternalLink, MapPin, ChevronRight } from 'lucide-react';
 
 export default function HomeRedirect() {
   const placeId = 'ChIJRd8DOAApdTER8OSMpvARRLs';
-  // The magical optimized URL that research shows reliable application interception!
-  const reviewUrl = `https://search.google.com/local/writereview/mobile?placeid=${placeId}`;
+  // REVERTED to the Official Solid URL to fix the 404 error
+  const reviewUrl = `https://search.google.com/local/writereview?placeid=${placeId}`;
   
   useEffect(() => {
     // Use standard high-level assignment which robust mobile browsers intercept naturally!
