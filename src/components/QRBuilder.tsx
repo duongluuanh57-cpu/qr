@@ -28,8 +28,8 @@ export default function QRBuilder() {
     setOrigin(window.location.origin);
   }, []);
 
-  // Dynamically link the generated QR code directly to our secure Internal Auto-Redirect path!
-  const finalUrl = origin ? `${origin}/go` : 'https://search.google.com/local/writereview';
+  // THE QR CODE NOW POINTS DIRECTLY TO THE ROOT DOMAIN FOR MAXIMUM SIMPLICITY!
+  const finalUrl = origin || 'https://search.google.com/local/writereview';
 
   // Load dynamic library on client
   useEffect(() => {
