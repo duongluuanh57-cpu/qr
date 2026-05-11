@@ -9,15 +9,36 @@ export default function HomeRedirect() {
   const reviewUrl = `https://search.google.com/local/writereview?placeid=${placeId}`;
   
   useEffect(() => {
-    // Use standard high-level assignment which robust mobile browsers intercept naturally!
-    window.location.assign(reviewUrl);
+    const ua = navigator.userAgent.toLowerCase();
+    
+    // TARGETING CHROME PACKAGE FOR ANDROID!
+    // Since 99% of Androids have Chrome and users ARE ALREADY SIGNED IN to Google there!
+    const androidChromeIntent = `intent://search.google.com/local/writereview?placeid=${placeId}#Intent;scheme=https;package=com.android.chrome;end`;
 
-    // Secondary fire backup
-    const timer = setTimeout(() => {
-      window.location.href = reviewUrl;
-    }, 500);
-    return () => clearTimeout(timer);
+    if (ua.indexOf('android') > -1) {
+      // Execute absolute Chrome Breakout command instantly!
+      window.location.assign(androidChromeIntent);
+      
+      // Rapid Safety backup trigger
+      const timer = setTimeout(() => {
+        window.location.href = androidChromeIntent;
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      // Standard secure behavior for iOS / Desktop
+      window.location.assign(reviewUrl);
+    }
   }, []);
+
+  // Enhanced Action button to trigger the Intent via User Click if Zalo enforces it!
+  const handleForceRedirect = (e: React.MouseEvent) => {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf('android') > -1) {
+       e.preventDefault();
+       const androidChromeIntent = `intent://search.google.com/local/writereview?placeid=${placeId}#Intent;scheme=https;package=com.android.chrome;end`;
+       window.location.href = androidChromeIntent;
+    }
+  };
 
   return (
     <div style={{ 
@@ -50,7 +71,7 @@ export default function HomeRedirect() {
             <h2 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>Đang mở Google Maps</h2>
             <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)' }}>Nếu máy không tự nhảy, hãy bấm nút:</p>
           </div>
-          <a href={reviewUrl} style={{
+          <a href={reviewUrl} onClick={handleForceRedirect} style={{
             background: '#4285F4',
             color: 'white',
             textDecoration: 'none',
